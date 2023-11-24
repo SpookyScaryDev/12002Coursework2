@@ -1,3 +1,6 @@
 .vscode
 
 communicationTest/Communication.h
+input/Communication.h
+output/Communication.h
+screen/Communication.h
