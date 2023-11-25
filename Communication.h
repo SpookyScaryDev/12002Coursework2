@@ -11,30 +11,32 @@ enum class MonitoringDataIDs {
     MOISTURE,
     LIGHT,
 
-    COUNT
+    NUM
 };
 
 enum class OutputDataIDs {
     FAN_SPEED,
     HEATER_TEMPERATURE,
 
-    COUNT
+    NUM
 };
 
-inline void SetupCommunication(int address) {
+inline void SetupCommunication(const int& address) {
     Wire.begin(address);
 }
 
-inline bool TransmitData(int address, int* data) {
+inline bool TransmitData(const int& address, int* data, const size_t& numElements) {
     Wire.beginTransmission(address);
-    for (int dataID = 0; dataID <= sizeof(data) / sizeof(data[0]); dataID++) {
+    for (int dataID = 0; dataID < numElements; dataID++) {
         Wire.write(dataID);
         Wire.write(data[dataID]);
     }
     Wire.endTransmission();
+
+    return true;
 }
 
-inline bool ReceiveData(int* data) {
+inline bool ReceiveData(int* data, const size_t& numElements) {
     if (Wire.available() % 2 != 0) {
         // Error in transmission!
         return false;
@@ -43,7 +45,7 @@ inline bool ReceiveData(int* data) {
     bool error = false;
     while (Wire.available() > 0) {
         int dataID = Wire.read();
-        if (0 <= dataID && dataID < sizeof(data) / sizeof(data[0])) {
+        if (0 <= dataID && dataID < numElements) {
             data[dataID] = Wire.read();
         }
         else {

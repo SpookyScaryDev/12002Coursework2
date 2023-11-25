@@ -1,6 +1,6 @@
 #include "Communication.h"
 
-int inputData[(int)MonitoringDataIDs::COUNT];
+int inputData[(int)MonitoringDataIDs::NUM];
 int& temperature = inputData[(int)MonitoringDataIDs::TEMPERATURE];
 int& moisture    = inputData[(int)MonitoringDataIDs::MOISTURE];
 int& light       = inputData[(int)MonitoringDataIDs::LIGHT];
@@ -14,5 +14,5 @@ void loop() {
   moisture = rand() % 40 - 20;
   light = rand() % 10;
 
-  TransmitData(DISPLAY_ADDRESS, inputData);
+  TransmitData(DISPLAY_ADDRESS, inputData, (size_t)MonitoringDataIDs::NUM);
 }
