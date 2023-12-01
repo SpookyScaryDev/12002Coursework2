@@ -19,6 +19,7 @@ enum class MonitoringDataIDs {
 enum class OutputDataIDs {
     FAN_SPEED,
     HEATER_TEMPERATURE,
+    LIGHT_INTENSITY,
 
     NUM
 };
